@@ -9,7 +9,7 @@ class Stack():
     def push(self, c):
         self.stack.append(c)
     def pop(self):
-        self.stack.pop()
+        return self.stack.pop()   #没有return,返回值为None
     def size(self):
         return len(self.stack)
     def peek(self):
@@ -20,15 +20,15 @@ class Stack():
 if __name__ == '__main__':
     
     #测试上述数据结构的功能是否与想要的一致
-    s = Stack()。  #初始化一个栈对象
+    s = Stack()  #初始化一个栈对象
     print(s.isEmpty()) #判断对象是否为空
     s.push(3)  #向栈对象s中添加一个整数3
     s.push(7)
     s.push(2)
-    print(s.size())。#size方法返回栈对象的长度
-    s.pop()        #pop方法移除栈顶元素
+    print(s.size())  #size方法返回栈对象的长度
+    print(s.pop())        #pop方法移除栈顶元素
     print(s.size())
-    print(s.peek())。#peek方法‘窥视’栈顶元素
+    print(s.peek())  #peek方法‘窥视’栈顶元素
 
     s.push(11)
     print(s.peek())
