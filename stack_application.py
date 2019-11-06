@@ -2,7 +2,7 @@
 # 1、括号的匹配
 # 2、中缀表达式转后缀表达式
 # 3、后缀表达式的计算
-from mypythonds_stack import Stack
+from mypythonds import Stack
 import re
 
 
