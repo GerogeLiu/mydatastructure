@@ -23,9 +23,11 @@ def isNumber(s):
 	try:
 		float(s)
 	except ValueError:
-		return False
-	else:
-		return True
+		try:
+			complex(s)
+		except ValueError:
+			return False
+	return True
 ~~~
 >> 但是，之后发现会出现如下问题，当字符串是'n(N)a(A)n(N)'或'i(I)n(N)f(F)'时，上述代码会得到True的结果。
 ~~~python
@@ -48,9 +50,11 @@ def isNumber(s):
 		try:
 			float(s)
 		except ValueError:
-			return False
-		else:
-			return True
+			try:
+				complex(s)
+			except ValueError:
+				return False
+		return True
 ~~~
 >> 为解决两个字符串可能造成误判，上述代码添加判断语句，排除这两个字符串再进行下一步操作。
 
