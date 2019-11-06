@@ -30,9 +30,35 @@ def parMatch(T):
 
 #中缀表达式转成后缀表达式
 def toPostfix(exp):
-    num = Stack()
-    op = Stack()
+    operStack = Stack()       #栈放置操作符
     result = []
+    prec = {'*': 3,\
+            '/': 3,\
+            '+': 2,\
+            '-': 2,\
+            '(': 1}
+    index = 0
+    while index < len(exp):
+        if isNumber(exp[index]):
+            result.append(exp[index])
+        elif exp[index] == '(':
+            operStack.push(exp[index])
+        elif exp[index] == ')':
+            operator = operStack.pop()
+            while operator != '(':
+                result.append(operator)
+                operator = operStack.pop()
+        else:
+            while not operStack.isEmpty() and prec[operStack.peek()] >= prec[exp[index]]:
+                result.append(operStack.pop())
+            operStack.push(exp[index])
+
+        index += 1
+
+    while not operStack.isEmpty():
+        result.append(operStack.pop())
+    return ''.join(result)
+
 
 
 
@@ -58,13 +84,13 @@ def calcPostfix(T):
                     result = arimetic(num1, num2, T[index])  #调用calculation函数进行计算
                     s.push(result)
         else:
-            return '存在无效字符'
+            return '\'{}\'为无效字符'.format(T[index])
         index += 1
 
     if s.size() == 1 and valid:
         return s.pop()
     else:
-        return 'NaN'
+        return '存在未知错误'
 
 
 #判断字符串为数字(整数或浮点数)
@@ -76,6 +102,19 @@ def isNumber(s):
         return True
     else:
         return False
+
+
+
+#再写一个判断数字的字符串包括复数也可判断
+def isNumberV2(s):
+    try:
+        float(s)
+    except ValueError:
+        try:
+            complex(s)
+        except ValueError:
+            return False
+    return True
 
 #四则运算
 def arimetic(n1, n2, op):
@@ -89,8 +128,14 @@ def arimetic(n1, n2, op):
         return n1 * n2
 
 if __name__ == '__main__':
-    t = input('输入后缀表达式(空格隔开):')
-    print(calcPostfix(t.split()))
+    t0 = input('输入括号(判断是否匹配):')
+    print('括号匹配情况:{}'.format(parMatch(t0)))
+
+    t1 = input('输入中缀表达式:')
+    print(toPostfix(t1))
+
+    t2 = input('输入后缀表达式:')
+    print('后缀表达式计算结果:{}'.format(calcPostfix(t2)))
 
 
 
